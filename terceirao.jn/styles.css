@@ -15,6 +15,12 @@ h1{
   color: gold;
 }
 
+h3{
+  color:gold;
+  text-align:left;
+}
+
+
 #ranking {
   position: absolute;
   top: 20px;
@@ -139,4 +145,38 @@ h1{
 #financas-quiz{
 
   text-align: top;
+}
+
+#feedback {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #ccc;
+  border-radius: 8px;
+}
+
+#feedback-list li {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #1013a4;
+  border-left: 5px solid;
+  border-radius: 5px;
+  background-color: #1013a4;
+  list-style: none;
+}
+
+#feedback-list li span {
+  font-weight: bold;
+}
+
+#feedback-list li span[style*="green"] {
+  color: #2e7d32 !important;
+  border-left-color: #2e7d32;
+  background-color:  #1013a4;
+}
+
+#feedback-list li span[style*="red"] {
+  color: #c62828 !important;
+  border-left-color: #c62828;
+  background-color:  #1013a4;
 }
