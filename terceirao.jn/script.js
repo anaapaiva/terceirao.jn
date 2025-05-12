@@ -1,6 +1,7 @@
 let perguntaAtual = 0;
 let pontuacao = 0;
 let nomeJogador = "";
+let respostasUsuario = [];
 
 const perguntas = [
   { pergunta: "Qual é a chance de sair cara em uma única jogada de uma moeda?", respostas: ["0%", "25%", "50%", "75%"], correta: 2 },
@@ -14,58 +15,77 @@ const perguntas = [
   { pergunta: "Se você tem uma chance de 1 em 1000 de ganhar um prêmio, qual é a probabilidade de não ganhar?", respostas: ["99%", "100%", "98%", "90%"], correta: 0 }
 ];
 
-const startButton = document.getElementById('start-button');
-const nextButton = document.getElementById('next-button');
-const restartButton = document.getElementById('restart-button');
-const playerNameInput = document.getElementById('player-name');
-const rankingList = document.getElementById('ranking-list');
-const questionDiv = document.getElementById('question');
-const optionsDiv = document.getElementById('options');
-const resultDiv = document.getElementById('result');
-const quizContainer = document.getElementById('quiz-container');
-const startScreen = document.getElementById('start-screen');
+// Executa quando a página estiver carregada
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('start-button').addEventListener('click', startQuiz);
+  document.getElementById('next-button').addEventListener('click', nextQuestion);
+  document.getElementById('restart-button').addEventListener('click', restartQuiz);
+  document.getElementById('clear-ranking-button').addEventListener('click', clearRanking);
 
-startButton.addEventListener('click', startQuiz);
-nextButton.addEventListener('click', nextQuestion);
-restartButton.addEventListener('click', restartQuiz);
+  updateRankingList(); // Exibe o ranking salvo
+});
 
+// Inicia o quiz
 function startQuiz() {
-  nomeJogador = playerNameInput.value.trim();
+  nomeJogador = document.getElementById('player-name').value.trim();
   if (!nomeJogador) {
     alert('Por favor, digite seu nome!');
     return;
   }
-  startScreen.style.display = 'none';
-  quizContainer.style.display = 'block';
+
+  perguntaAtual = 0;
+  pontuacao = 0;
+  respostasUsuario = [];
+
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('quiz-container').style.display = 'block';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('feedback').style.display = 'none';
+
   loadQuestion();
 }
 
+// Carrega uma pergunta
 function loadQuestion() {
   const pergunta = perguntas[perguntaAtual];
+  const questionDiv = document.getElementById('question');
+  const optionsDiv = document.getElementById('options');
+
   questionDiv.textContent = `${perguntaAtual + 1}. ${pergunta.pergunta}`;
   optionsDiv.innerHTML = '';
+
   pergunta.respostas.forEach((resposta, index) => {
     const label = document.createElement('label');
     label.innerHTML = `<input type="radio" name="q${perguntaAtual}" value="${index}"> ${resposta}`;
     optionsDiv.appendChild(label);
   });
-  nextButton.style.display = 'none';
-  document.querySelectorAll('input[name="q' + perguntaAtual + '"]').forEach(input => {
+
+  document.getElementById('next-button').style.display = 'none';
+
+  document.querySelectorAll(`input[name="q${perguntaAtual}"]`).forEach(input => {
     input.addEventListener('change', () => {
-      nextButton.style.display = 'block';
+      document.getElementById('next-button').style.display = 'block';
     });
   });
 }
 
+// Avança para a próxima pergunta
 function nextQuestion() {
-  const selectedOption = document.querySelector('input[name="q' + perguntaAtual + '"]:checked');
+  const selectedOption = document.querySelector(`input[name="q${perguntaAtual}"]:checked`);
   if (!selectedOption) {
     alert('Por favor, selecione uma resposta!');
     return;
   }
 
-  const respostaCorreta = perguntas[perguntaAtual].correta;
   const respostaSelecionada = parseInt(selectedOption.value);
+  const respostaCorreta = perguntas[perguntaAtual].correta;
+
+  respostasUsuario.push({
+    pergunta: perguntas[perguntaAtual].pergunta,
+    correta: perguntas[perguntaAtual].respostas[respostaCorreta],
+    escolhida: perguntas[perguntaAtual].respostas[respostaSelecionada],
+    acertou: respostaSelecionada === respostaCorreta
+  });
 
   if (respostaSelecionada === respostaCorreta) {
     pontuacao++;
@@ -80,11 +100,23 @@ function nextQuestion() {
   }
 }
 
+// Exibe o resultado final
 function showResult() {
-  quizContainer.style.display = 'none';
-  resultDiv.style.display = 'block';
+  document.getElementById('quiz-container').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+
   document.getElementById('final-name').textContent = nomeJogador;
   document.getElementById('final-score').textContent = `${pontuacao} de ${perguntas.length}`;
+
+  let mensagem = '';
+  if (pontuacao === perguntas.length) {
+    mensagem = 'Parabéns! Você acertou tudo!';
+  } else if (pontuacao >= perguntas.length / 2) {
+    mensagem = 'Bom trabalho! Continue praticando.';
+  } else {
+    mensagem = 'Não desanime! Tente novamente.';
+  }
+  document.getElementById('mensagem-final').textContent = mensagem;
 
   const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
   ranking.push({ nome: nomeJogador, pontuacao });
@@ -92,27 +124,53 @@ function showResult() {
   localStorage.setItem('ranking', JSON.stringify(ranking));
 
   updateRankingList();
+  showFeedback();
 }
 
-function updateRankingList() {
-  rankingList.innerHTML = '';
-  const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
-  ranking.slice(0, 10).forEach(player => {
+// Mostra o feedback de cada pergunta
+function showFeedback() {
+  const feedbackList = document.getElementById('feedback-list');
+  feedbackList.innerHTML = '';
+  document.getElementById('feedback').style.display = 'block';
+
+  respostasUsuario.forEach((resposta, index) => {
     const li = document.createElement('li');
-    li.textContent = `${player.nome}: ${player.pontuacao}`;
+    li.innerHTML = `
+      <strong>${index + 1}. ${resposta.pergunta}</strong><br>
+      Sua resposta: <span style="color: ${resposta.acertou ? 'green' : 'red'}; font-weight: bold;">
+        ${resposta.escolhida}
+      </span><br>
+      Resposta correta: <strong>${resposta.correta}</strong>
+    `;
+    feedbackList.appendChild(li);
+  });
+}
+
+// Atualiza o ranking na tela
+function updateRankingList() {
+  const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+  const rankingList = document.getElementById('ranking-list');
+  rankingList.innerHTML = '';
+
+  ranking.slice(0, 10).forEach((item, index) => {
+    const li = document.createElement('li');
+    li.textContent = `${index + 1}. ${item.nome} - ${item.pontuacao} pts`;
     rankingList.appendChild(li);
   });
 }
 
+// Reinicia o quiz
 function restartQuiz() {
-  perguntaAtual = 0;
-  pontuacao = 0;
-  resultDiv.style.display = 'none';
-  startScreen.style.display = 'block';
-  playerNameInput.value = '';
+  document.getElementById('start-screen').style.display = 'block';
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('player-name').value = '';
 }
 
+// Limpa o ranking
 function clearRanking() {
-  localStorage.removeItem('ranking');
-  updateRankingList();
+  if (confirm("Deseja realmente apagar o ranking?")) {
+    localStorage.removeItem('ranking');
+    updateRankingList();
+  }
 }
