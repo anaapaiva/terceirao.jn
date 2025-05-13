@@ -11,7 +11,7 @@ body {
   color: #fff;
 }
 
-h1{
+h1 {
   color: gold;
 }
 
@@ -39,7 +39,9 @@ h1{
   margin-bottom: 5px;
 }
 
-#start-screen, #quiz-container, #result {
+#start-screen,
+#quiz-container,
+#result {
   text-align: center;
   background: rgba(0, 0, 0, 0.85);
   padding: 30px;
@@ -49,7 +51,8 @@ h1{
   max-width: 700px;
 }
 
-#start-screen h2, #result h2 {
+#start-screen h2,
+#result h2 {
   color: gold;
   margin-bottom: 20px;
 }
@@ -63,7 +66,9 @@ h1{
   width: 80%;
 }
 
-#start-button, #next-button, #restart-button {
+#start-button,
+#next-button,
+#restart-button {
   padding: 12px 24px;
   font-size: 18px;
   font-weight: bold;
@@ -75,7 +80,9 @@ h1{
   transition: background-color 0.3s, transform 0.2s;
 }
 
-#start-button:hover, #next-button:hover, #restart-button:hover {
+#start-button:hover,
+#next-button:hover,
+#restart-button:hover {
   background-color: #ffe600;
   transform: scale(1.05);
 }
@@ -136,7 +143,194 @@ h1{
 .selected {
   background-color: #ffeb3b; /* Cor para a resposta selecionada */
 }
-#financas-quiz{
-
+#financas-quiz {
   text-align: top;
 }
+body {
+  font-family: Tahoma, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #0b1d51 0%, #000 100%);
+  background-size: cover;
+  height: 100vh;
+  color: #fff;
+}
+
+h1 {
+  color: gold;
+}
+
+h3 {
+  color: gold;
+  text-align: left;
+}
+
+#ranking {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#ranking h2 {
+  margin: 0 0 15px;
+  color: gold;
+}
+
+#ranking-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#ranking-list li {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+#start-screen,
+#quiz-container,
+#result {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgb(5, 28, 133);
+  width: 90%;
+  max-width: 700px;
+}
+
+#start-screen h2,
+#result h2 {
+  color: gold;
+  margin-bottom: 20px;
+}
+
+#player-name {
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  border: 2px solid #555;
+  width: 80%;
+}
+
+#start-button,
+#next-button,
+#restart-button {
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  background: gold;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#start-button:hover,
+#next-button:hover,
+#restart-button:hover {
+  background-color: #ffe600;
+  transform: scale(1.05);
+}
+
+#question {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+#options label {
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  background: #14213d;
+  border: 2px solid #555;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+#options label:hover {
+  background: #1f2c5c;
+  transform: scale(1.02);
+}
+
+#options input[type="radio"] {
+  display: none;
+  margin-right: 10px;
+}
+
+#result p {
+  font-size: 20px;
+  color: gold;
+}
+.option {
+  display: block;
+  margin: 10px 0;
+  font-size: 18px;
+  background: #14213d;
+  border: 2px solid #555;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #1f2c5c;
+  transform: scale(1.02);
+}
+
+.correct {
+  background-color: #4caf50; /* Cor para a resposta correta */
+  font-weight: bold;
+}
+
+.selected {
+  background-color: #ffeb3b; /* Cor para a resposta selecionada */
+}
+#financas-quiz {
+  text-align: top;
+}
+
+#feedback {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-left: 5px solid #ccc;
+  border-radius: 8px;
+}
+
+#feedback-list li {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #1013a4;
+  border-left: 5px solid;
+  border-radius: 5px;
+  background-color: #1013a4;
+  list-style: none;
+}
+
+#feedback-list li span {
+  font-weight: bold;
+}
+
+#feedback-list li span[style*="green"] {
+  color: #2e7d32 !important;
+  border-left-color: #2e7d32;
+  background-color: #1013a4;
+}
+
+#feedback-list li span[style*="red"] {
+  color: #c62828 !important;
+  border-left-color: #c62828;
+  background-color: #1013a4;
+}
+/* >>>>>>> 89300ae2c0967b0bb6a933aee0206fe46ba37d3a:terceirao.jn/styles.css */

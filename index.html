@@ -1,44 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title> Quiz de Finanças</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <!-- Ranking -->
-  <div id="ranking">
-    <h2>Ranking</h2>
-    <ul id="ranking-list"></ul>
-    <button onclick="clearRanking()">Limpar</button>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz de Finanças</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Ranking -->
+    <div id="ranking">
+      <h2>Ranking</h2>
+      <ul id="ranking-list"></ul>
+      <button onclick="clearRanking()">Limpar</button>
+    </div>
 
-  <!-- Tela de quiz -->
-  <div id="quiz-container" style="display: none;">
-    <h1>Show do Terceirão</h1>
-    <div id="question"></div>
-    <div id="options"></div>
-    <button id="next-button" style="display: none;">Próxima Pergunta</button>
-  </div>
+    <!-- Tela de quiz -->
+    <div id="quiz-container" style="display: none">
+      <h1>Show do Terceirão</h1>
+      <div id="question"></div>
+      <div id="options"></div>
+      <button id="next-button" style="display: none">Próxima Pergunta</button>
+    </div>
 
-  <!-- Resultado -->
-  <div id="result" style="display: none;">
-    <h2>Você terminou o quiz!</h2>
-    <p><strong>Nome:</strong> <span id="final-name"></span></p>
-    <p><strong>Pontuação Final:</strong> <span id="final-score"></span></p>
-  </div>
+    <!-- Resultado -->
+    <div id="result" style="display: none">
+      <h2>Você terminou o quiz!</h2>
+      <p><strong>Nome:</strong> <span id="final-name"></span></p>
+      <p><strong>Pontuação Final:</strong> <span id="final-score"></span></p>
+    </div>
 
-  <!-- Tela inicial -->
-  <div id="start-screen">
-    <h2>Bem-vindo ao Show do Terceirão!</h2>
-    <input type="text" id="player-name" placeholder="Digite seu nome">
-    <button id="start-button">Iniciar Quiz</button>
-  </div>
+    <!-- Tela inicial -->
+    <div id="start-screen">
+      <h2>Bem-vindo ao Show do Terceirão!</h2>
+      <input type="text" id="player-name" placeholder="Digite seu nome" />
+      <button id="start-button">Iniciar Quiz</button>
+    </div>
 
-  <!-- Botão para reiniciar -->
-  <button id="restart-button" style="display: none;">Recomeçar</button>
+    <!-- Botão para reiniciar -->
+    <button id="restart-button" style="display: none">Recomeçar</button>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show do Terceirão</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="start-screen">
+      <h1>Show do Terceirão</h1>
+      <p>Digite seu nome para começar:</p>
+      <input type="text" id="player-name" placeholder="Seu nome aqui" />
+      <button id="start-button">Iniciar Quiz</button>
+    </div>
+
+    <div id="quiz-container" style="display: none">
+      <div id="question"></div>
+      <div id="options"></div>
+      <button id="next-button" style="display: none">Próxima Pergunta</button>
+    </div>
+
+    <div id="result" style="display: none">
+      <h2>Resultado</h2>
+      <p id="final-name"></p>
+      <p id="final-score"></p>
+      <p id="mensagem-final"></p>
+      <button id="restart-button">Reiniciar</button>
+    </div>
+
+    <div id="ranking">
+      <h2>Ranking</h2>
+      <ul id="ranking-list"></ul>
+      <button id="clear-ranking-button">Limpar Ranking</button>
+    </div>
+
+    <div id="feedback" style="display: none">
+      <h2>Feedback</h2>
+      <ul id="feedback-list"></ul>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
+<!-- >>>>>>> 89300ae2c0967b0bb6a933aee0206fe46ba37d3a:terceirao.jn/index.html -->
