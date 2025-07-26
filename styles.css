@@ -69,7 +69,7 @@ button {
   text-decoration: none;
   padding: 0.8rem 1.6rem;
   font-size: 1rem;
-  border: 3px solid #000000;
+  border: 3px solid #b8860b;
   border-radius: 10px;
   box-shadow: 4px 4px #444;
   transition: 0.3s;
@@ -78,7 +78,7 @@ button {
 }
 
 button:hover {
-  background-color: #ffffff;
+  background-color: #ffec8b;
   transform: scale(1.05);
 }
 
@@ -107,7 +107,7 @@ button:hover {
 }
 
 #options label:hover {
-  background-color: #bdbdbd;
+  background-color: #ffec8b;
 }
 
 /* --- Ranking e Feedback --- */
@@ -119,8 +119,6 @@ button:hover {
   list-style: none;
   padding: 0;
   text-align: left;
-  border: 2px solid black;
-
 }
 
 #ranking-list li, #feedback-list li {
