@@ -1,5 +1,9 @@
-// script.js - Versão unificada e otimizada
-
+const startScreen = document.getElementById("startScreen");
+const playBtn = document.getElementById("playBtn");
+const quizContainer = document.getElementById("quizContainer");
+const questionText = document.getElementById("questionText");
+const answersDiv = document.getElementById("answers");
+const nextBtn = document.getElementById("nextBtn");
 let perguntaAtual = 0;
 let pontuacao = 0;
 let nomeJogador = "";
@@ -61,6 +65,7 @@ const perguntas = [
   },
 ];
 
+// Executa quando a página estiver carregada
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("start-button").addEventListener("click", startQuiz);
   document
@@ -73,15 +78,17 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("clear-ranking-button")
     .addEventListener("click", clearRanking);
 
-  updateRankingList();
+  updateRankingList(); // Exibe o ranking salvo
 });
 
+// Inicia o quiz
 function startQuiz() {
   nomeJogador = document.getElementById("player-name").value.trim();
   if (!nomeJogador) {
     alert("Por favor, digite seu nome!");
     return;
   }
+
   perguntaAtual = 0;
   pontuacao = 0;
   respostasUsuario = [];
@@ -94,6 +101,7 @@ function startQuiz() {
   loadQuestion();
 }
 
+// Carrega uma pergunta
 function loadQuestion() {
   const pergunta = perguntas[perguntaAtual];
   const questionDiv = document.getElementById("question");
@@ -119,6 +127,7 @@ function loadQuestion() {
     });
 }
 
+// Avança para a próxima pergunta
 function nextQuestion() {
   const selectedOption = document.querySelector(
     `input[name="q${perguntaAtual}"]:checked`
@@ -138,7 +147,9 @@ function nextQuestion() {
     acertou: respostaSelecionada === respostaCorreta,
   });
 
-  if (respostaSelecionada === respostaCorreta) pontuacao++;
+  if (respostaSelecionada === respostaCorreta) {
+    pontuacao++;
+  }
 
   perguntaAtual++;
 
@@ -149,6 +160,7 @@ function nextQuestion() {
   }
 }
 
+// Exibe o resultado final
 function showResult() {
   document.getElementById("quiz-container").style.display = "none";
   document.getElementById("result").style.display = "block";
@@ -177,6 +189,7 @@ function showResult() {
   showFeedback();
 }
 
+// Mostra o feedback de cada pergunta
 function showFeedback() {
   const feedbackList = document.getElementById("feedback-list");
   feedbackList.innerHTML = "";
@@ -197,6 +210,7 @@ function showFeedback() {
   });
 }
 
+// Atualiza o ranking na tela
 function updateRankingList() {
   const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
   const rankingList = document.getElementById("ranking-list");
@@ -209,6 +223,7 @@ function updateRankingList() {
   });
 }
 
+// Reinicia o quiz
 function restartQuiz() {
   document.getElementById("start-screen").style.display = "block";
   document.getElementById("result").style.display = "none";
@@ -216,6 +231,7 @@ function restartQuiz() {
   document.getElementById("player-name").value = "";
 }
 
+// Limpa o ranking
 function clearRanking() {
   if (confirm("Deseja realmente apagar o ranking?")) {
     localStorage.removeItem("ranking");
