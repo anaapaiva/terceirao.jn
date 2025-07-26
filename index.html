@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show do Terceirão</title>
+    <title>Show do Terceirão - Quiz de Probabilidade</title>
     <link rel="icon" href="logo.jpg" type="image/x-icon" />
-    <link rel="stylesheet" href="index.css"/>
-</head>
-<body>
-
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
     <div id="start-screen" class="container">
       <img src="logo.jpg" alt="Show do Terceirão" class="logo" />
-        <h1>Quiz</h1>
-        <p>Teste seus conhecimentos!</p>
-        <input type="text" id="player-name" placeholder="Digite seu nome" />
-        <button id="start-button">Iniciar Quiz</button>
+      <h1>Quiz</h1>
+      <p>Teste seus conhecimentos!</p>
+      <input type="text" id="player-name" placeholder="Digite seu nome" />
+      <button id="start-button">Iniciar Quiz</button>
 
-        <div class="ranking-container">
-            <h2>🏆 Ranking 🏆</h2>
-            <ul id="ranking-list"></ul>
-            <button id="clear-ranking-button">Limpar Ranking</button>
-        </div>
+      <div class="ranking-container">
+        <h2>🏆 Ranking 🏆</h2>
+        <ul id="ranking-list"></ul>
+        <button id="clear-ranking-button">Limpar Ranking</button>
+      </div>
     </div>
 
-    <div id="quiz-container" class="container" style="display: none;">
-        <div id="question"></div>
-        <div id="options" class="options-grid"></div>
-        <button id="next-button" style="display: none;">Próxima Pergunta</button>
+    <div id="quiz-container" class="container" style="display: none">
+      <div id="question"></div>
+      <div id="options" class="options-grid"></div>
+      <button id="next-button" style="display: none">Próxima Pergunta</button>
     </div>
 
-    <div id="result" class="container" style="display: none;">
-        <h1>Resultado Final</h1>
-        <p>Parabéns, <strong id="final-name"></strong>!</p>
-        <p>Sua pontuação foi: <strong id="final-score"></strong></p>
-        <p id="mensagem-final"></p>
-        <button id="restart-button">Jogar Novamente</button>
+    <div id="result" class="container" style="display: none">
+      <h1>Resultado Final</h1>
+      <p>Parabéns, <strong id="final-name"></strong>!</p>
+      <p>Sua pontuação foi: <strong id="final-score"></strong></p>
+      <p id="mensagem-final"></p>
+      <button id="restart-button">Jogar Novamente</button>
     </div>
 
-    <div id="feedback" class="container" style="display: none;">
-        <h2>Gabarito</h2>
-        <ul id="feedback-list"></ul>
+    <div id="feedback" class="container" style="display: none">
+      <h2>Gabarito</h2>
+      <ul id="feedback-list"></ul>
     </div>
 
     <script src="script.js"></script>
-
-</body>
+  </body>
 </html>
