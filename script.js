@@ -238,3 +238,4 @@ function clearRanking() {
     updateRankingList();
   }
 }
+
