@@ -22,26 +22,27 @@ html, body {
 
 /* --- Contêiner Principal --- */
 .container {
-  background-color: rgba(255, 255, 255, 0.85); /* Fundo branco semitransparente para legibilidade */
+  background-color: rgba(255, 255, 255, 0.85);
   border: 4px solid black;
   border-radius: 15px;
   padding: 2rem;
-  width: 90%;
+  width: 100%;
   max-width: 800px;
   margin: auto;
   text-align: center;
   box-shadow: 8px 8px #000;
 }
 
-/* --- Títulos (H1, H2) --- */
+/* --- Títulos --- */
 h1, h2 {
-  background-color: #ffd700; /* Fundo amarelo para destaque */
+  background-color: #ffd700;
   color: black;
   padding: 0.5rem 1rem;
   border: 3px solid black;
   border-radius: 8px;
-  display: inline-block; /* Faz o fundo se ajustar ao texto */
+  display: inline-block;
   margin-bottom: 1rem;
+  font-size: 1.2rem;
 }
 
 /* --- Textos e Inputs --- */
@@ -55,7 +56,7 @@ input[type="text"] {
   padding: 0.8rem;
   border: 3px solid black;
   border-radius: 8px;
-  width: 80%;
+  width: 100%;
   margin-bottom: 1rem;
   font-size: 1rem;
   text-align: center;
@@ -66,7 +67,6 @@ button {
   font-family: "Press Start 2P", cursive;
   background-color: #ffd700;
   color: black;
-  text-decoration: none;
   padding: 0.8rem 1.6rem;
   font-size: 1rem;
   border: 3px solid #b8860b;
@@ -75,6 +75,7 @@ button {
   transition: 0.3s;
   cursor: pointer;
   margin-top: 10px;
+  width: 100%;
 }
 
 button:hover {
@@ -84,7 +85,7 @@ button:hover {
 
 /* --- Estilos do Quiz --- */
 #question {
-  font-size: 1.5rem; /* Aumentei o tamanho da fonte da pergunta */
+  font-size: 1.2rem;
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -96,7 +97,7 @@ button:hover {
 }
 
 #options label {
-  font-size: 1.2rem; /* Aumentei o tamanho da fonte das alternativas */
+  font-size: 1rem;
   padding: 1rem;
   border: 3px solid black;
   border-radius: 10px;
@@ -104,6 +105,7 @@ button:hover {
   cursor: pointer;
   text-align: left;
   transition: background-color 0.2s;
+  width: 100%;
 }
 
 #options label:hover {
@@ -128,9 +130,46 @@ button:hover {
   border-radius: 5px;
   border: 2px solid black;
 }
+
+/* --- Logo --- */
 .logo {
   display: block;
-  margin: 0 auto 20px auto; /* Centralizada */
-  max-width: 80%; /* Ocupa até 80% da largura do container */
+  margin: 0 auto 20px auto;
+  max-width: 100%;
   height: auto;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+  html, body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  h1, h2 {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  #question {
+    font-size: 1rem;
+  }
+
+  #options label {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+
+  input[type="text"] {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
 }
