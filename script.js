@@ -216,7 +216,7 @@ function updateRankingList() {
   const rankingList = document.getElementById("ranking-list");
   rankingList.innerHTML = "";
 
-  ranking.slice(0, 10).forEach((item, index) => {
+  ranking.slice(0, 40).forEach((item, index) => {
     const li = document.createElement("li");
     li.textContent = `${index + 1}. ${item.nome} - ${item.pontuacao} pts`;
     rankingList.appendChild(li);
