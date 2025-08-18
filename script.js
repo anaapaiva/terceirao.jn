@@ -65,7 +65,6 @@ const perguntas = [
   },
 ];
 
-// Executa quando a página estiver carregada
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("start-button").addEventListener("click", startQuiz);
   document
@@ -78,10 +77,9 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("clear-ranking-button")
     .addEventListener("click", clearRanking);
 
-  updateRankingList(); // Exibe o ranking salvo
+  updateRankingList();
 });
 
-// Inicia o quiz
 function startQuiz() {
   nomeJogador = document.getElementById("player-name").value.trim();
   if (!nomeJogador) {
@@ -101,7 +99,6 @@ function startQuiz() {
   loadQuestion();
 }
 
-// Carrega uma pergunta
 function loadQuestion() {
   const pergunta = perguntas[perguntaAtual];
   const questionDiv = document.getElementById("question");
@@ -127,7 +124,6 @@ function loadQuestion() {
     });
 }
 
-// Avança para a próxima pergunta
 function nextQuestion() {
   const selectedOption = document.querySelector(
     `input[name="q${perguntaAtual}"]:checked`
@@ -160,7 +156,6 @@ function nextQuestion() {
   }
 }
 
-// Exibe o resultado final
 function showResult() {
   document.getElementById("quiz-container").style.display = "none";
   document.getElementById("result").style.display = "block";
@@ -189,7 +184,6 @@ function showResult() {
   showFeedback();
 }
 
-// Mostra o feedback de cada pergunta
 function showFeedback() {
   const feedbackList = document.getElementById("feedback-list");
   feedbackList.innerHTML = "";
@@ -198,32 +192,39 @@ function showFeedback() {
   respostasUsuario.forEach((resposta, index) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <strong>${index + 1}. ${resposta.pergunta}</strong><br>
-      Sua resposta: <span style="color: ${
-        resposta.acertou ? "green" : "red"
-      }; font-weight: bold;">
-        ${resposta.escolhida}
-      </span><br>
-      Resposta correta: <strong>${resposta.correta}</strong>
-    `;
+                    <strong>${index + 1}. ${resposta.pergunta}</strong><br>
+                    Sua resposta: <span style="color: ${
+                      resposta.acertou ? "green" : "red"
+                    }; font-weight: bold;">
+                        ${resposta.escolhida}
+                    </span><br>
+                    Resposta correta: <strong>${resposta.correta}</strong>
+                `;
     feedbackList.appendChild(li);
   });
 }
 
-// Atualiza o ranking na tela
 function updateRankingList() {
   const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
   const rankingList = document.getElementById("ranking-list");
   rankingList.innerHTML = "";
 
-  ranking.slice(0, 100).forEach((item, index) => {
+  ranking.slice(0, 40).forEach((item, index) => {
     const li = document.createElement("li");
-    li.textContent = `${index + 1}. ${item.nome} - ${item.pontuacao} pts`;
+
+    // Medalhas para os 3 primeiros
+    let medalha = "";
+    if (index === 0) medalha = "🥇 ";
+    else if (index === 1) medalha = "🥈 ";
+    else if (index === 2) medalha = "🥉 ";
+
+    li.textContent = `${medalha}${index + 1}. ${item.nome} - ${
+      item.pontuacao
+    } pts`;
     rankingList.appendChild(li);
   });
 }
 
-// Reinicia o quiz
 function restartQuiz() {
   document.getElementById("start-screen").style.display = "block";
   document.getElementById("result").style.display = "none";
@@ -231,7 +232,6 @@ function restartQuiz() {
   document.getElementById("player-name").value = "";
 }
 
-// Limpa o ranking
 function clearRanking() {
   if (confirm("Deseja realmente apagar o ranking?")) {
     localStorage.removeItem("ranking");
