@@ -1,13 +1,17 @@
-const startScreen = document.getElementById("startScreen");
-const playBtn = document.getElementById("playBtn");
-const quizContainer = document.getElementById("quizContainer");
-const questionText = document.getElementById("questionText");
-const answersDiv = document.getElementById("answers");
-const nextBtn = document.getElementById("nextBtn");
+const startScreen = document.getElementById("start-screen");
+const playBtn = document.getElementById("start-button");
+const quizContainer = document.getElementById("quiz-container");
+const questionText = document.getElementById("question");
+const answersDiv = document.getElementById("options");
+const nextBtn = document.getElementById("next-button");
+const timerCorner = document.getElementById("timer-corner");
+
 let perguntaAtual = 0;
 let pontuacao = 0;
 let nomeJogador = "";
 let respostasUsuario = [];
+let timerInterval;
+let timeLeft = 120; // 2 minutos
 
 let perguntas = [
   {
@@ -68,7 +72,7 @@ let perguntas = [
   },
 ];
 
-// Função para embaralhar as perguntas
+// Embaralhar perguntas
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -76,21 +80,20 @@ function shuffle(array) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("start-button").addEventListener("click", startQuiz);
-  document
-    .getElementById("next-button")
-    .addEventListener("click", nextQuestion);
+// Inicialização
+document.addEventListener("DOMContentLoaded", () => {
+  playBtn.addEventListener("click", startQuiz);
+  nextBtn.addEventListener("click", nextQuestion);
   document
     .getElementById("restart-button")
     .addEventListener("click", restartQuiz);
   document
     .getElementById("clear-ranking-button")
     .addEventListener("click", clearRanking);
-
   updateRankingList();
 });
 
+// Começar quiz
 function startQuiz() {
   nomeJogador = document.getElementById("player-name").value.trim();
   if (!nomeJogador) {
@@ -101,43 +104,42 @@ function startQuiz() {
   perguntaAtual = 0;
   pontuacao = 0;
   respostasUsuario = [];
-
-  // Embaralhar as perguntas a cada novo jogo
   shuffle(perguntas);
 
-  document.getElementById("start-screen").style.display = "none";
-  document.getElementById("quiz-container").style.display = "block";
+  startScreen.style.display = "none";
+  quizContainer.style.display = "block";
   document.getElementById("result").style.display = "none";
   document.getElementById("feedback").style.display = "none";
 
+  timeLeft = 120;
+  timerCorner.textContent = formatTime(timeLeft);
+  startTimer();
   loadQuestion();
 }
 
+// Carregar pergunta
 function loadQuestion() {
   const pergunta = perguntas[perguntaAtual];
-  const questionDiv = document.getElementById("question");
-  const optionsDiv = document.getElementById("options");
-
-  questionDiv.textContent = `${perguntaAtual + 1}. ${pergunta.pergunta}`;
-  optionsDiv.innerHTML = "";
+  questionText.textContent = `${perguntaAtual + 1}. ${pergunta.pergunta}`;
+  answersDiv.innerHTML = "";
 
   pergunta.respostas.forEach((resposta, index) => {
     const label = document.createElement("label");
     label.innerHTML = `<input type="radio" name="q${perguntaAtual}" value="${index}"> ${resposta}`;
-    optionsDiv.appendChild(label);
+    answersDiv.appendChild(label);
   });
 
-  document.getElementById("next-button").style.display = "none";
+  nextBtn.style.display = "none";
 
-  document
-    .querySelectorAll(`input[name="q${perguntaAtual}"]`)
-    .forEach((input) => {
-      input.addEventListener("change", () => {
-        document.getElementById("next-button").style.display = "block";
-      });
+  const radios = document.querySelectorAll(`input[name="q${perguntaAtual}"]`);
+  radios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      nextBtn.style.display = "block";
     });
+  });
 }
 
+// Próxima pergunta
 function nextQuestion() {
   const selectedOption = document.querySelector(
     `input[name="q${perguntaAtual}"]:checked`
@@ -157,21 +159,37 @@ function nextQuestion() {
     acertou: respostaSelecionada === respostaCorreta,
   });
 
-  if (respostaSelecionada === respostaCorreta) {
-    pontuacao++;
-  }
-
+  if (respostaSelecionada === respostaCorreta) pontuacao++;
   perguntaAtual++;
 
-  if (perguntaAtual < perguntas.length) {
-    loadQuestion();
-  } else {
-    showResult();
-  }
+  if (perguntaAtual < perguntas.length) loadQuestion();
+  else showResult();
 }
 
+// Timer
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerCorner.textContent = formatTime(timeLeft);
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      nextQuestion();
+    }
+  }, 1000);
+}
+
+function formatTime(seconds) {
+  const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const sec = String(seconds % 60).padStart(2, "0");
+  return `${min}:${sec}`;
+}
+
+// Resultado final
 function showResult() {
-  document.getElementById("quiz-container").style.display = "none";
+  clearInterval(timerInterval);
+
+  quizContainer.style.display = "none";
   document.getElementById("result").style.display = "block";
 
   document.getElementById("final-name").textContent = nomeJogador;
@@ -180,13 +198,10 @@ function showResult() {
   ).textContent = `${pontuacao} de ${perguntas.length}`;
 
   let mensagem = "";
-  if (pontuacao === perguntas.length) {
-    mensagem = "Parabéns! Você acertou tudo!";
-  } else if (pontuacao >= perguntas.length / 2) {
+  if (pontuacao === perguntas.length) mensagem = "Parabéns! Você acertou tudo!";
+  else if (pontuacao >= perguntas.length / 2)
     mensagem = "Bom trabalho! Continue praticando.";
-  } else {
-    mensagem = "Não desanime! Tente novamente.";
-  }
+  else mensagem = "Não desanime! Tente novamente.";
   document.getElementById("mensagem-final").textContent = mensagem;
 
   const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
@@ -198,43 +213,36 @@ function showResult() {
   showFeedback();
 }
 
+// Feedback detalhado
 function showFeedback() {
   const feedbackList = document.getElementById("feedback-list");
   feedbackList.innerHTML = "";
   document.getElementById("feedback").style.display = "block";
 
   respostasUsuario.forEach((resposta, index) => {
-    // 👉 Inserir "zero-width space" depois de cada vírgula para permitir quebra de linha
     const perguntaQuebravel = resposta.pergunta.replace(/,/g, ",\u200B");
-
     const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${index + 1}. ${perguntaQuebravel}</strong><br>
-      Sua resposta: <span style="color: ${
+    li.innerHTML = `<strong>${index + 1}. ${perguntaQuebravel}</strong><br>
+      Sua resposta: <span style="color:${
         resposta.acertou ? "green" : "red"
-      }; font-weight: bold;">
-        ${resposta.escolhida}
-      </span><br>
-      Resposta correta: <strong>${resposta.correta}</strong>
-    `;
+      }; font-weight: bold;">${resposta.escolhida}</span><br>
+      Resposta correta: <strong>${resposta.correta}</strong>`;
     feedbackList.appendChild(li);
   });
 }
 
+// Ranking
 function updateRankingList() {
   const ranking = JSON.parse(localStorage.getItem("ranking")) || [];
   const rankingList = document.getElementById("ranking-list");
   rankingList.innerHTML = "";
 
   ranking.slice(0, 40).forEach((item, index) => {
-    const li = document.createElement("li");
-
-    // Medalhas para os 3 primeiros
     let medalha = "";
     if (index === 0) medalha = "🥇 ";
     else if (index === 1) medalha = "🥈 ";
     else if (index === 2) medalha = "🥉 ";
-
+    const li = document.createElement("li");
     li.textContent = `${medalha}${index + 1}. ${item.nome} - ${
       item.pontuacao
     } pts`;
@@ -242,13 +250,19 @@ function updateRankingList() {
   });
 }
 
+// Reiniciar
 function restartQuiz() {
-  document.getElementById("start-screen").style.display = "block";
+  startScreen.style.display = "block";
   document.getElementById("result").style.display = "none";
   document.getElementById("feedback").style.display = "none";
   document.getElementById("player-name").value = "";
+
+  clearInterval(timerInterval);
+  timeLeft = 120;
+  timerCorner.textContent = formatTime(timeLeft);
 }
 
+// Limpar ranking
 function clearRanking() {
   if (confirm("Deseja realmente apagar o ranking?")) {
     localStorage.removeItem("ranking");
