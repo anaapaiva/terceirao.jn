@@ -12,7 +12,7 @@ html, body {
   min-height: 100vh;
   font-family: "Press Start 2P", cursive;
   color: black;
-  background: url("logo.jpg") center/cover no-repeat fixed;
+  background: url("logo.png") center/cover no-repeat fixed;
   padding: 20px;
 }
 
