@@ -11,7 +11,7 @@ let pontuacao = 0;
 let nomeJogador = "";
 let respostasUsuario = [];
 let timerInterval;
-let timeLeft = 120; // 2 minutos
+let timeLeft = 150; // 2 minutos e meio
 
 let perguntas = [
   {
@@ -258,7 +258,7 @@ function restartQuiz() {
   document.getElementById("player-name").value = "";
 
   clearInterval(timerInterval);
-  timeLeft = 120;
+  timeLeft = 150;
   timerCorner.textContent = formatTime(timeLeft);
 }
 
