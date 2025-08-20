@@ -9,61 +9,72 @@ let pontuacao = 0;
 let nomeJogador = "";
 let respostasUsuario = [];
 
-const perguntas = [
+let perguntas = [
   {
-    pergunta: "Qual é a chance de sair cara em uma única jogada de uma moeda?",
-    respostas: ["0%", "25%", "50%", "75%"],
+    pergunta: "Quantos segundos tem em um dia?",
+    respostas: ["60.000", "86.400", "100.000", "72.800"],
+    correta: 1,
+  },
+  {
+    pergunta:
+      "Ana Luíza trabalha 8 horas por dia em escala 6×1. Considerando um ano com 52 semanas e que ela terá 1 mês de folga equivalente a 4 semanas, quantas horas ela trabalhará nesse ano?",
+    respostas: ["2.080", "2.304", "2.600", "2.160"],
+    correta: 1,
+  },
+  {
+    pergunta: "Qual número a letra L representa nos algarismos romanos?",
+    respostas: ["100", "10", "50", "500"],
+    correta: 2,
+  },
+  {
+    pergunta: "Quanto é 30% de 60?",
+    respostas: ["12", "15", "18", "20"],
     correta: 2,
   },
   {
     pergunta:
-      "Se um dado tem 6 faces, qual é a probabilidade de sair o número 4?",
-    respostas: ["1 em 3", "1 em 4", "1 em 6", "1 em 2"],
+      "Qual a moda da sequência: 35,36,40,40,40,37,37,38,36,36,36,35,34,35,36,37,35,38,35,35,35?",
+    respostas: ["36", "37", "35", "40"],
+    correta: 2,
+  },
+  {
+    pergunta: "Quanto é a metade de meia década mais 5 anos?",
+    respostas: ["10", "5", "7,5", "6"],
     correta: 2,
   },
   {
     pergunta:
-      "Qual é a chance de tirar uma carta de copas de um baralho comum com 52 cartas?",
-    respostas: ["13 em 52", "4 em 52", "1 em 13", "26 em 52"],
+      "Quantas formas diferentes pode-se escrever a palavra PROBABILIDADE?",
+    respostas: ["19.958.400", "9.979.200", "12.000.000", "15.552.000"],
     correta: 0,
   },
   {
     pergunta:
-      "Em uma roleta com 8 cores diferentes, qual a chance de cair em uma cor específica?",
-    respostas: ["1 em 4", "1 em 8", "1 em 2", "2 em 3"],
-    correta: 1,
-  },
-  {
-    pergunta:
-      "Qual a probabilidade de sair um número par ao lançar um dado de 6 lados?",
-    respostas: ["2 em 6", "1 em 6", "3 em 6", "5 em 6"],
-    correta: 2,
-  },
-  {
-    pergunta:
-      "Em um sorteio com 10 números diferentes, qual é a chance de acertar um número?",
-    respostas: ["2 em 10", "1 em 10", "5 em 10", "10 em 10"],
-    correta: 1,
-  },
-  {
-    pergunta:
-      "Se um jogo tem 3 portas e apenas uma tem o prêmio, qual é a chance de acertar de primeira?",
-    respostas: ["50%", "1 em 3", "1 em 2", "2 em 3"],
-    correta: 1,
-  },
-  {
-    pergunta:
-      "Se a probabilidade de um evento acontecer é de 20%, qual é a probabilidade dele não acontecer?",
-    respostas: ["80%", "90%", "70%", "50%"],
+      "Qual é a chance de tirar uma carta de copas de um baralho comum de 52 cartas?",
+    respostas: ["13 em 52", "1 em 26", "1 em 52", "10 em 52"],
     correta: 0,
   },
   {
     pergunta:
-      "Se você tem uma chance de 1 em 1000 de ganhar um prêmio, qual é a probabilidade de não ganhar?",
-    respostas: ["99%", "100%", "98%", "90%"],
+      "Uma empresa teve R$19.000,00 de lucro em janeiro. No mês seguinte obteve 15% a mais. Qual foi o lucro em fevereiro?",
+    respostas: ["R$ 21.500,00", "R$ 21.850,00", "R$ 21.852,00", "R$ 22.000,00"],
+    correta: 2,
+  },
+  {
+    pergunta:
+      "Obtenha o valor de M, sabendo que a distância entre os pontos C(+1,-2) e D(m,-2) é 5.",
+    respostas: ["M = +6 ou -4", "M = +5 ou -5", "M = +4 ou -6", "M = +3 ou -3"],
     correta: 0,
   },
 ];
+
+// Função para embaralhar as perguntas
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("start-button").addEventListener("click", startQuiz);
@@ -90,6 +101,9 @@ function startQuiz() {
   perguntaAtual = 0;
   pontuacao = 0;
   respostasUsuario = [];
+
+  // Embaralhar as perguntas a cada novo jogo
+  shuffle(perguntas);
 
   document.getElementById("start-screen").style.display = "none";
   document.getElementById("quiz-container").style.display = "block";
@@ -190,16 +204,19 @@ function showFeedback() {
   document.getElementById("feedback").style.display = "block";
 
   respostasUsuario.forEach((resposta, index) => {
+    // 👉 Inserir "zero-width space" depois de cada vírgula para permitir quebra de linha
+    const perguntaQuebravel = resposta.pergunta.replace(/,/g, ",\u200B");
+
     const li = document.createElement("li");
     li.innerHTML = `
-                    <strong>${index + 1}. ${resposta.pergunta}</strong><br>
-                    Sua resposta: <span style="color: ${
-                      resposta.acertou ? "green" : "red"
-                    }; font-weight: bold;">
-                        ${resposta.escolhida}
-                    </span><br>
-                    Resposta correta: <strong>${resposta.correta}</strong>
-                `;
+      <strong>${index + 1}. ${perguntaQuebravel}</strong><br>
+      Sua resposta: <span style="color: ${
+        resposta.acertou ? "green" : "red"
+      }; font-weight: bold;">
+        ${resposta.escolhida}
+      </span><br>
+      Resposta correta: <strong>${resposta.correta}</strong>
+    `;
     feedbackList.appendChild(li);
   });
 }
