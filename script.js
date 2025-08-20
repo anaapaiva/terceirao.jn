@@ -111,7 +111,7 @@ function startQuiz() {
   document.getElementById("result").style.display = "none";
   document.getElementById("feedback").style.display = "none";
 
-  timeLeft = 120;
+  timeLeft = 150; // tempo total
   timerCorner.textContent = formatTime(timeLeft);
   startTimer();
   loadQuestion();
@@ -174,7 +174,7 @@ function startTimer() {
     timerCorner.textContent = formatTime(timeLeft);
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
-      nextQuestion();
+      showResult(); // agora finaliza o quiz automaticamente
     }
   }, 1000);
 }
