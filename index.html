@@ -8,7 +8,7 @@
   </head>
   <body>
     <div id="start-screen" class="container">
-      <img src="logo.png" alt="Show do Terceirão" class="logo" />
+      <img src="logo.jpg" alt="Show do Terceirão" class="logo" />
       <h1>Quiz de Probabilidade</h1>
       <p>Teste seus conhecimentos!</p>
       <input type="text" id="player-name" placeholder="Digite seu nome" />
@@ -27,6 +27,9 @@
       <button id="next-button" style="display: none">Próxima Pergunta</button>
     </div>
 
+    <!-- Temporizador no canto -->
+    <div id="timer-corner">02:00</div>
+
     <div id="result" class="container" style="display: none">
       <h1>Resultado Final</h1>
       <p>Parabéns, <strong id="final-name"></strong>!</p>
@@ -39,6 +42,7 @@
       <h2>Gabarito</h2>
       <ul id="feedback-list"></ul>
     </div>
+
     <script src="index.js"></script>
   </body>
 </html>
