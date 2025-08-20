@@ -7,7 +7,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   min-height: 100vh;
   font-family: "Press Start 2P", cursive;
@@ -30,7 +31,8 @@ html, body {
 }
 
 /* --- Títulos --- */
-h1, h2 {
+h1,
+h2 {
   background-color: #ffd700;
   color: black;
   padding: 0.5rem 1rem;
@@ -122,17 +124,20 @@ button:hover {
 }
 
 /* --- Ranking e Feedback --- */
-.ranking-container, #feedback {
+.ranking-container,
+#feedback {
   margin-top: 2rem;
 }
 
-#ranking-list, #feedback-list {
+#ranking-list,
+#feedback-list {
   list-style: none;
   padding: 0;
   text-align: left;
 }
 
-#ranking-list li, #feedback-list li {
+#ranking-list li,
+#feedback-list li {
   margin-bottom: 1rem;
   background: white;
   padding: 0.5rem;
