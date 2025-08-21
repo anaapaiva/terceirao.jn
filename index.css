@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
+
 /* Reset básico */
 * {
   margin: 0;
@@ -202,3 +203,4 @@ button:hover {
     max-width: 100%;
   }
 }
+
