@@ -42,7 +42,14 @@ h2 {
   display: inline-block;
   margin-bottom: 1.5rem;
   word-wrap: break-word;
+  font-size: 1.4rem;   /* tamanho padrão no desktop */
+  line-height: 1.4;
+  max-width: 100%;     /* evita quebrar o layout */
+  text-align: center;  /* centraliza bem no mobile */
 }
+
+
+
 
 /* Inputs e botões */
 input[type="text"] {
