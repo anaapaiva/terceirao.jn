@@ -44,7 +44,7 @@ Temporizador fixo no canto da tela
 
 Clone o repositório:
 
-git clone https://github.com/seuusuario/show-do-terceirao.git
+git clone https://github.com/anaapaiva/show-do-terceirao.git
 
 
 Abra o arquivo index.html no navegador.
@@ -96,9 +96,9 @@ Inclusão de animações sonoras e efeitos visuais
 
 Ana Paiva – Desenvolvedora Front-end
 
-GitHub: https://github.com/seuusuario
+GitHub: https://github.com/anaapaiva
 
-LinkedIn: https://www.linkedin.com/in/seuusuario
+
 
 📄 Licença
 
